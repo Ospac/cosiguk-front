@@ -5,7 +5,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import {TextField, Typography} from '@mui/material';
 
 
-function Post () {
+function Publish () {
 
     const [newPost, setNewPost] = useState({ title:"", nickname:"", password:"",content:""});
     async function onPublish(event){
@@ -113,4 +113,4 @@ function Post () {
         </div>
     )
 }
-export default Post
+export default Publish;
