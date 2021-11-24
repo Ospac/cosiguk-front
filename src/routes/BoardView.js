@@ -6,7 +6,23 @@ import {Link} from 'react-router-dom';
 import EditHeader from '../components/Editheader';
 
 async function getBoardData() {
-  const response = await axios.get("/api/board/boardList")
+  const body = {
+    page: 0, //page 변동처리
+    size: 10 
+  };
+  var formBody = [];
+  for (var property in body) {
+  var encodedKey = encodeURIComponent(property);
+  var encodedValue = encodeURIComponent(body[property]);
+  formBody.push(encodedKey + "=" + encodedValue);
+  }
+  formBody = formBody.join("&");
+
+  const response = await axios({
+    method: 'post',
+    url: '/api/board/boardList',
+    data: formBody
+  })
   return response.data;
 }
 

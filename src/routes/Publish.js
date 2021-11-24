@@ -1,55 +1,56 @@
 import styles from "./Post.module.css";
+import styled from 'styled-components';
+import axios from 'axios';
 import {useState} from "react";
 import Box from '@mui/material/Box';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import {TextField, Typography} from '@mui/material';
 
-
+const PostContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+const PostHeader = styled.div`
+    width: 750px;
+    height: 80px;
+    font-weight: bold;
+    font-size: 35px;
+`;
+const PostContents = styled.form`
+    display: flex;
+    flex-direction: column;
+    width: 750px;
+`;
 function Publish () {
 
     const [newPost, setNewPost] = useState({ title:"", nickname:"", password:"",content:""});
     async function onPublish(event){
-        event.preventDefault();
-       
-        const body = {
-            nickname: newPost.nickname,
-            password: newPost.password,
-            title: newPost.title,
-            content: newPost.content
-        };
-        var formBody = [];
-        for (var property in body) {
-        var encodedKey = encodeURIComponent(property);
-        var encodedValue = encodeURIComponent(body[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-        }
-        formBody = formBody.join("&");
+        event.preventDefault();        
 
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-            body: formBody
-        };
-        
-        await fetch('/api/board/boardAdd', requestOptions)
-            .then((response)=> response.json())
-            .then((json) => {
-                console.log(json); 
-                console.log(requestOptions)})
-            .catch((error) => {
-                console.log(error);
-            });
+        const params = new URLSearchParams();
+        params.append('nickname', newPost.nickname);
+        params.append('password', newPost.password);
+        params.append('title', newPost.title);
+        params.append('content', newPost.content);
+        const config = {headers : {'Content-Type': 'application/x-www-form-urlencoded'}}
+
+        await axios.post("/api/board/boardAdd", params, config)
+        .then((json) => {
+            console.log(json);
+        }).catch((error) => {
+            console.log(error);
+        });
         
     }
     const handleChange = (e) => {
         setNewPost(prevObject => ({...prevObject, [e.target.name]: e.target.value}));
     }
     return(
-        <div className={styles.postContainer}>
-            <div className={styles.postHeader}>
+        <PostContainer>
+            <PostHeader>
                 글쓰기
-            </div>
-            <form onSubmit={onPublish} className={styles.postContents}>
+            </PostHeader>
+            <PostContents onSubmit={onPublish}>
                 <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection:'column' }}>
                     <div>
                     <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5}} />
@@ -107,10 +108,10 @@ function Publish () {
                         inputProps={{style:{width: "700px", backgroundColor: "white"}}}/>
                     </Box>
                 <button>등록</button>
-            </form>
+            </PostContents>
             <div className={styles.postFooter}>
             </div>
-        </div>
+        </PostContainer>
     )
 }
 export default Publish;
