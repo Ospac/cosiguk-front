@@ -24,7 +24,7 @@ export const NavBarData = [
     },
     {
         title: "공지사항",
-        path: "",
+        path: "/notice",
         icon: <BsClipboardPlus/>,
         
     }

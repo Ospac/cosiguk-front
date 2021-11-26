@@ -1,61 +1,51 @@
-import {useState, useEffect} from "react";
 import axios from 'axios';
-import styles from "./Home.module.css"
+import styled from 'styled-components'
+import UseAsync from "../hooks/UseAsync.js";
 import InfectionStats from '../components/InfectionStats.js'
 import InfectionByCity from '../components/InfectionByCity.js'
 
-function Home(){
-    let loadCnt = 0;
-    const [isLoading, setLoading] = useState(0);
-    const [infectionStatusData, setInfectionStatusData] = useState([]);
-    const [infectionCityData, setInfectionCityData] = useState([]);
+const IndexContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+const InfectionStatsContainer  = styled.div`
+`;
+const InfectionByRegionContainer = styled.div`
+`;
 
-    useEffect(() => {
-        getInfectionStatus(); 
-        getInfectionCity();
-       },[]);
+function Home(){
     async function getInfectionStatus(){
-        await axios
-        .get("/api/data/infectionStatus")
-        .then((response) => {
-        setInfectionStatusData(response.data.response.body.items.item);
-        setLoading(++loadCnt);
-        })
-        .catch((error) => {
-            console.log(error);
-        })
+        const response = await axios.get("/api/data/infectionStatus");
+        return response.data;
     }
     async function getInfectionCity(){
-        await axios
-        .get("/api/data/infectionCity")
-        .then((response) => {
-        setInfectionCityData(response.data.response.body.items.item);
-        setLoading(++loadCnt);
-        })
-        .catch((error) => {
-            console.log(error);
-        })
+        const response = await axios.get("/api/data/infectionCity");
+        return response.data;
     }
+    const [infStatState, statRefetch] = UseAsync(getInfectionStatus, []);
+    const [infCityState, cityRefetch] = UseAsync(getInfectionCity, []);
+    const {loading : infStatLoading, data : infStatData, error : infStatError} = infStatState;
+    const {loading : infCityLoading, data : infCityData, error : infCityError} = infCityState;
+
+    if(infStatLoading || infCityLoading) return <div>Loading</div>;
+    if(infStatError || infCityError) return <div>error page</div>;
+    if(!infStatData || !infCityData) return <div>loading</div>
+    const infectionStatusData = infStatData.response.body.items.item;
+    const infectionCityData = infCityData.response.body.items.item;
+
     return(
-        <div className={styles.container}>
-            {isLoading === 2?
-            <div>
-                <div className={styles.indexContainer}>
-                    <div className={styles.infectionStats_container}>
-                        <InfectionStats 
-                        todayCnt={infectionStatusData[0]}
-                        yesterdayCnt={infectionStatusData[1]}
-                        />
-                    </div>
-                    <div className={styles.infectionByRegion_container}>
-                        <InfectionByCity cities={infectionCityData}/>
-                    </div>
-                </div>
-            </div>
-            :
-            <div className={styles.loader}></div> 
-            }
-        </div>
+        <IndexContainer>
+            <InfectionStatsContainer>
+                <InfectionStats 
+                todayCnt={infectionStatusData[0]}
+                yesterdayCnt={infectionStatusData[1]}
+                />
+            </InfectionStatsContainer>
+            <InfectionByRegionContainer>
+                <InfectionByCity cities={infectionCityData}/>
+            </InfectionByRegionContainer>
+        </IndexContainer>
     )
 }
 export default Home;
