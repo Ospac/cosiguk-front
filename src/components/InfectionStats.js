@@ -1,25 +1,47 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const AboveStats = styled.div`
+const StatsContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-items: center;
     width: 460px;
+    margin-top:10px;
     flex-wrap: wrap;
-    margin-top: 30px;
     margin-left: 10px;
+`;
+const AboveStatsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items : center;
+    box-shadow: 0 0.1px 2px rgb(32 33 36 / 10%);
+    border: 1px solid rgba(70, 77, 82, 0.2);
+    border-radius: 7px;
+    background: white;
+    width: 440px;
+    padding: 20px;
+    
+`;
+const AboveStatsTitle = styled.div`
+    font-weight: 300;
+    font-size: 20px;
+`;
+const AboveStatsNum = styled.div`
+    font-size: 25px;
+    font-weight: 400;
 `;
 const StatsBlock = styled.div`
     display: flex;
     flex-direction: column;
-    box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
-    border: 1px solid rgba(70, 77, 82, 0.082);
-    border-radius: 13px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0.1px 2px rgb(32 33 36 / 10%);
+    border: 1px solid rgba(70, 77, 82, 0.2);
+    border-radius: 7px;
     padding: 20px 20px 20px 20px;
     width: 100px;
-    background-color: rgb(167, 167, 255);
+    background-color: white;
     margin: 4px 4px 4px 4px;
 `;
 const StatCnt = styled.div`
@@ -56,37 +78,39 @@ const FooterStatNum = styled.div``;
 function InfectionStats ({todayCnt, yesterdayCnt}){
     const todayStats = [
         todayCnt.decideCnt,
-        // todayCnt.clearCnt,
         todayCnt.deathCnt,
         todayCnt.accExamCnt,
-        // todayCnt.examCnt,
-        // todayCnt.resutlNegCnt
     ]
     const yesterStats = [
         yesterdayCnt.decideCnt,
-        // yesterdayCnt.clearCnt,
         yesterdayCnt.deathCnt,
         yesterdayCnt.accExamCnt,
-        // yesterdayCnt.examCnt,
-        // yesterdayCnt.resutlNegCnt
     ]
-    const statsName = ["확진환자",  "사망자", "누적 의심신고 검사자"];
+    const statsName = ["확진자",  "사망자", "누적 검사자"];
     return(
-            <AboveStats>
-                {todayStats.map((stat, i)=>
+            <StatsContainer>
+                <AboveStatsContainer>
+                    <AboveStatsTitle>확진자:</AboveStatsTitle>
+                    <AboveStatsNum>{todayCnt.decideCnt}</AboveStatsNum>
+                    <AboveStatsTitle>사망자:</AboveStatsTitle>
+                    <AboveStatsNum>{todayCnt.deathCnt}</AboveStatsNum>
+                    <AboveStatsTitle>누적 검사자:</AboveStatsTitle>
+                    <AboveStatsNum>{todayCnt.accExamCnt}</AboveStatsNum>
+                </AboveStatsContainer>
+                {/* {todayStats.map((stat, i)=>
                     <StatsBlock key={i}>
+                        <AboveStatsName>{statsName[i]}</AboveStatsName>
                         <StatCnt>{stat.toLocaleString()}</StatCnt>
                         <CompareStats>({(stat - yesterStats[i]).toLocaleString()})</CompareStats>
-                        <AboveStatsName>{statsName[i]}</AboveStatsName>
                     </StatsBlock>
-                )}
+                )} */}
                 <StatFooter>
                     <FooterItem>
                         <FooterStatTitle>격리 중</FooterStatTitle>
                         <FooterStatNum>{(todayCnt.decideCnt - todayCnt.clearCnt - todayCnt.deathCnt).toLocaleString()}</FooterStatNum>
                     </FooterItem>
                     <FooterItem>
-                        <FooterStatTitle>추가 확진자</FooterStatTitle>
+                        <FooterStatTitle>오늘 확진자</FooterStatTitle>
                         <FooterStatNum>{(todayCnt.decideCnt - yesterdayCnt.decideCnt).toLocaleString()}</FooterStatNum>
                         </FooterItem>
                     <FooterItem>
@@ -94,7 +118,7 @@ function InfectionStats ({todayCnt, yesterdayCnt}){
                         <FooterStatNum>{(todayCnt.clearCnt - yesterdayCnt.clearCnt).toLocaleString()}</FooterStatNum>
                     </FooterItem>
                 </StatFooter>
-            </AboveStats>          
+            </StatsContainer>          
     )
 }
 

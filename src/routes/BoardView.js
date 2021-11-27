@@ -1,10 +1,32 @@
 import axios from 'axios';
-import styles from "./BoardView.module.css";
+import styled from 'styled-components';
 import Post from "../components/Post.js";
 import UseAsync from "../hooks/UseAsync.js";
 import {Link} from 'react-router-dom';
 import EditHeader from '../components/Editheader';
-
+const BoardViewHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: 50px;
+  height: 80px;
+`;
+const BoardViewTitle = styled.h2`
+`;
+const BoardViewWriteLink = styled(Link)`
+  div{
+    margin-left: 20px;
+  }
+`;
+const BoardViewContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+const BoardViewBody = styled.div`
+`;
 async function getBoardData() {
   const body = {
     page: 0, //page 변동처리
@@ -29,22 +51,26 @@ async function getBoardData() {
 function BoardView(){
   const [state, refetch] = UseAsync(getBoardData, []);
   const {loading, data, error} = state;
-  if(loading) return <div className={styles.loader}>Loading</div>;
+  if(loading) return <h1>Loading</h1>
   if(error) return <div>error page</div>;
   if(!data) return <div>loading</div>
   const boardDataList = data.result_data.data;
   
   return(
-        <>
-          <div className={styles.boardContainer}>
-            <Link to="./post"><EditHeader/></Link>
-            {boardDataList.map((item)=>
-              <Link key={item.id} to={`/board/${item.id}`}>
-                <Post postData={item} WhatFor="board"/>         
-              </Link>
-            )}      
-          </div>
-        </>
-        )
+      <> 
+      <BoardViewContainer>
+        <BoardViewHeader>
+          <BoardViewTitle>Community</BoardViewTitle>
+          <BoardViewWriteLink to="./post"><EditHeader/></BoardViewWriteLink>
+        </BoardViewHeader>
+        <BoardViewBody>
+          {boardDataList.map((item)=>
+            <Link key={item.id} to={`/board/${item.id}`}>
+              <Post postData={item} WhatFor="board"/>         
+            </Link>
+          )}
+        </BoardViewBody>
+      </BoardViewContainer>      
+     </>)
 }
 export default BoardView;

@@ -2,8 +2,6 @@ import styles from './Navbar.module.css'
 import {NavBarData} from './NavBarData.js'
 import {Link} from "react-router-dom";
 
-
-
 //useState로 버튼 활성화 상태 관리하기
 
 function NavBar (){

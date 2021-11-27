@@ -22,8 +22,8 @@ const PostHeader = styled.div`
     display:flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-left: 30px;
-    margin-top: 10px;
+    padding-left: 30px;
+    padding-top: 10px;
 `;
 const PostHeaderLeft = styled.div`
     display:flex;
@@ -65,7 +65,6 @@ const PostFooter = styled.div`
     border-top: 1px solid #f6f6f6;
     display: flex;
     flex-direction: row;
-    /* vertical-align: center; */
     padding: 4px 3px 3px 3px;
     align-items: center;
     justify-content: space-between;

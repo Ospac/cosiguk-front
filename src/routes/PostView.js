@@ -22,11 +22,13 @@ const CommentView = styled.div`
 const CommentWriteContainer = styled.div`
 
 `;
-function PostView(){
+
+function PostView({boardName}){
     const params= useParams();
     const postId = params.id;
+
     const getPostData = async() => {
-        const res = await axios.get(`/api/board/${postId}`)
+        const res = await axios.get(`/api/${boardName}/${postId}`)
         return res;
     }
     const getCommentData = async() => {
@@ -48,7 +50,10 @@ function PostView(){
 
     return(
         <PostViewContainer>
-            <Post postData={post} WhatFor="board"></Post>
+            {/* <BoardHeader>
+                <HeaderTitle>{boardName}</HeaderTitle>
+            </BoardHeader> */}
+            <Post postD ata={post} WhatFor="board"></Post>
             <CommentCnt>{comments.length} comments</CommentCnt>
             <CommentView>
                 {comments.map((com,i) => <Post id={i} postData={com} WhatFor="chat"></Post>)}

@@ -4,11 +4,15 @@ import UseAsync from "../hooks/UseAsync.js";
 import InfectionStats from '../components/InfectionStats.js'
 import InfectionByCity from '../components/InfectionByCity.js'
 
-const IndexContainer = styled.div`
+const HomeContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
 `;
+const HomeHeader = styled.div`
+    height: 80px;
+`;
+const HomeHeaderTitle = styled.h2``;
 const InfectionStatsContainer  = styled.div`
 `;
 const InfectionByRegionContainer = styled.div`
@@ -35,7 +39,10 @@ function Home(){
     const infectionCityData = infCityData.response.body.items.item;
 
     return(
-        <IndexContainer>
+        <HomeContainer>
+            <HomeHeader>
+                <HomeHeaderTitle>COVID19</HomeHeaderTitle>
+            </HomeHeader>
             <InfectionStatsContainer>
                 <InfectionStats 
                 todayCnt={infectionStatusData[0]}
@@ -45,7 +52,7 @@ function Home(){
             <InfectionByRegionContainer>
                 <InfectionByCity cities={infectionCityData}/>
             </InfectionByRegionContainer>
-        </IndexContainer>
+        </HomeContainer>
     )
 }
 export default Home;
