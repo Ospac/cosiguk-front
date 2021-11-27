@@ -9,7 +9,7 @@ function EditHeader(){
                 <Fab color="secondary" 
                     aria-label="write" 
                     size="small"
-                    color="white">
+                >
                     <EditIcon />
                 </Fab>
             </Tooltip>            

@@ -53,13 +53,14 @@ const PostTitle = styled.div`
     font-weight: bold;
     display: flex;
     justify-content: flex-start;
-    margin-left: 30px;
+    padding-left: 30px;
     font-size: 15px;
 `;
-const PostSummary = styled(PostTitle)`
+const PostContent = styled(PostTitle)`
     font-size: 13px;
     font-weight: normal;
-    padding-top: 3px;
+    padding-top: 10px;
+    padding-right: 30px;
 `;
 const PostFooter = styled.div`
     border-top: 1px solid #f6f6f6;
@@ -110,7 +111,7 @@ const CommentStats = styled(RecommendStats)`
     gap: 4px;
 `;
 
-function Post({postData, WhatFor}){
+function Post({postData, WhatFor, view}){
 
     const onRecommend = async(e) => {
         fetch(`/api/${WhatFor}/${e.currentTarget.value}/recommend`)
@@ -141,54 +142,65 @@ function Post({postData, WhatFor}){
             <PostContainer>
                 <PostHeader>
                     <PostHeaderLeft>
-                        <PostNickname>{postData.nickname === undefined ? <>관리자</>: postData.nickname.length > 9? postData.nickname.slice(0,9) : postData.nickname}</PostNickname>
+                        <PostNickname>{postData.nickname === undefined ? <>관리자</>: (postData.nickname.length > 11? postData.nickname.slice(0,11) : postData.nickname)}</PostNickname>
                         <PostDate>{postData.createdDate? postData.createdDate : postData.createDate}</PostDate>
                     </PostHeaderLeft>
                     {postData.hit? <PostHits>{postData.hit} views</PostHits> : null }
                 </PostHeader>
                 <PostBody>
                     <PostTitle>{postData.title && postData.title.length > 50? postData.title.slice(0,50) : postData.title}</PostTitle>
-                    <PostSummary>{postData.content && postData.content.length > 68? postData.content.slice(0,68) + "..." : (postData.content)}</PostSummary>
-                </PostBody>
-                <PostFooter>
-                    <FooterLeft>
-                        <Voting>
-                            <button value={postData.id}  onClick={onRecommend}>
-                                <Tooltip title="추천" arrow>{<ThumbUpAltIcon style={{ fill: 'rgba(0,0,0,0.45)' }}fontSize="10px" />}</Tooltip>
-                            </button>
-                            <button value={postData.id}  onClick={onDeprecate}>
-                                <Tooltip title="비추천" arrow>{<ThumbDownAltIcon style={{ fill: 'rgba(0,0,0,0.45)' }} fontSize="10px"/>}</Tooltip>
-                            </button>
+                    <PostContent>{
+                    view === "Community" || view === "Notice"? 
+                    (postData.content && postData.content.length > 75? postData.content.slice(0,75) + "..." : (postData.content))
+                    :
+                    postData.content}
+                    </PostContent>
+                    </PostBody>
+                {view === "NoticePostView" || view === "Notice"?
+                <PostFooter></PostFooter>
+                :
+                    <PostFooter>
+                        <FooterLeft>
+                            <Voting>
+                                <button value={postData.id}  onClick={onRecommend}>
+                                    <Tooltip title="추천" arrow>{<ThumbUpAltIcon style={{ fill: 'rgba(0,0,0,0.45)' }}fontSize="10px" />}</Tooltip>
+                                </button>
+                                <button value={postData.id}  onClick={onDeprecate}>
+                                    <Tooltip title="비추천" arrow>{<ThumbDownAltIcon style={{ fill: 'rgba(0,0,0,0.45)' }} fontSize="10px"/>}</Tooltip>
+                                </button>
+                                <button>
+                                    <Tooltip title="신고" arrow>
+                                        <ErrorIcon sx={{pt:0.06}} style={{ fill: 'rgba(0,0,0,0.45)', fontSize:"14px"}}/>
+                                    </Tooltip>
+                                </button>
+                            </Voting>
+                            <RecommendStats>
+                                <Tooltip title="추천 수" arrow><KeyboardArrowUpIcon style={{ fill: 'rgba(0,0,0,0.45)'}}fontSize="small"/></Tooltip>
+                                <Cnt>{postData.recommend} </Cnt>
+                            </RecommendStats>
+                            <CommentStats>
+                                {postData.review_count? 
+                                    <><Tooltip title="댓글 수" arrow><InsertCommentIcon  style={{ fill: 'rgba(0,0,0,0.45)' }} fontSize="6px"/></Tooltip>
+                                    <Cnt>{postData.review_count}</Cnt></>
+                                    : null}
+                            </CommentStats>
+                        </FooterLeft>
+                        <FooterRight>
                             <button>
-                                <Tooltip title="신고" arrow>
-                                    <ErrorIcon sx={{pt:0.06}} style={{ fill: 'rgba(0,0,0,0.45)', fontSize:"14px"}}/>
+                                <Tooltip title="삭제" arrow>
+                                    <CloseIcon style={{ fill: 'rgba(0,0,0,0.45)' }} fontSize="6px"/>
                                 </Tooltip>
                             </button>
-                        </Voting>
-                        <RecommendStats>
-                            <Tooltip title="추천 수" arrow><KeyboardArrowUpIcon style={{ fill: 'rgba(0,0,0,0.45)'}}fontSize="small"/></Tooltip>
-                            <Cnt>{postData.recommend} </Cnt>
-                        </RecommendStats>
-                        <CommentStats>
-                            {postData.review_count? 
-                                <><Tooltip title="댓글 수" arrow><InsertCommentIcon  style={{ fill: 'rgba(0,0,0,0.45)' }} fontSize="6px"/></Tooltip>
-                                <Cnt>{postData.review_count}</Cnt></>
-                                : null}
-                        </CommentStats>                    </FooterLeft>
-                    <FooterRight>
-                        <button>
-                            <Tooltip title="삭제" arrow>
-                                <CloseIcon style={{ fill: 'rgba(0,0,0,0.45)' }} fontSize="6px"/>
-                            </Tooltip>
-                        </button>
-                    </FooterRight>
-                </PostFooter>
+                        </FooterRight>
+                    </PostFooter>
+                }
             </PostContainer>
         </>
     )
 }
 Post.propTypes = {
     postData : PropTypes.object.isRequired,
-    WhatFor: PropTypes.string.isRequired
+    WhatFor: PropTypes.string.isRequired,
+    view: PropTypes.string.isRequired
 }
 export default Post;

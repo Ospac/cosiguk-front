@@ -15,13 +15,17 @@ const AboveStatsContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items : center;
+    justify-content: center;
     box-shadow: 0 0.1px 2px rgb(32 33 36 / 10%);
     border: 1px solid rgba(70, 77, 82, 0.2);
     border-radius: 7px;
     background: white;
-    width: 440px;
-    padding: 20px;
+    width: 420px;
+    padding: 15px;
     
+`;
+const AboveStatsBlock = styled.div`
+
 `;
 const AboveStatsTitle = styled.div`
     font-weight: 300;
@@ -31,22 +35,7 @@ const AboveStatsNum = styled.div`
     font-size: 25px;
     font-weight: 400;
 `;
-const StatsBlock = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 0.1px 2px rgb(32 33 36 / 10%);
-    border: 1px solid rgba(70, 77, 82, 0.2);
-    border-radius: 7px;
-    padding: 20px 20px 20px 20px;
-    width: 100px;
-    background-color: white;
-    margin: 4px 4px 4px 4px;
-`;
-const StatCnt = styled.div`
-    font-weight: bold;
-`;
+
 const AboveStatsName = styled.div`
     font-size: 13px;
 `;
@@ -58,14 +47,13 @@ const StatFooter = styled.div`
     font-size: 12px;
     box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
     border: 1px solid rgba(70, 77, 82, 0.082);
-    border-radius: 12px;
     margin-left: 8px;
     width: 440px;
     height: 50px;
-    margin-top: 10px;
+    margin-bottom: 10px;
     align-items: center;
     justify-content: center;
-    background-color: rgb(252, 212, 152);
+    background-color: rgb(255, 227, 185);
 `;
 
 const FooterItem = styled.div`
@@ -89,21 +77,6 @@ function InfectionStats ({todayCnt, yesterdayCnt}){
     const statsName = ["확진자",  "사망자", "누적 검사자"];
     return(
             <StatsContainer>
-                <AboveStatsContainer>
-                    <AboveStatsTitle>확진자:</AboveStatsTitle>
-                    <AboveStatsNum>{todayCnt.decideCnt}</AboveStatsNum>
-                    <AboveStatsTitle>사망자:</AboveStatsTitle>
-                    <AboveStatsNum>{todayCnt.deathCnt}</AboveStatsNum>
-                    <AboveStatsTitle>누적 검사자:</AboveStatsTitle>
-                    <AboveStatsNum>{todayCnt.accExamCnt}</AboveStatsNum>
-                </AboveStatsContainer>
-                {/* {todayStats.map((stat, i)=>
-                    <StatsBlock key={i}>
-                        <AboveStatsName>{statsName[i]}</AboveStatsName>
-                        <StatCnt>{stat.toLocaleString()}</StatCnt>
-                        <CompareStats>({(stat - yesterStats[i]).toLocaleString()})</CompareStats>
-                    </StatsBlock>
-                )} */}
                 <StatFooter>
                     <FooterItem>
                         <FooterStatTitle>격리 중</FooterStatTitle>
@@ -118,6 +91,28 @@ function InfectionStats ({todayCnt, yesterdayCnt}){
                         <FooterStatNum>{(todayCnt.clearCnt - yesterdayCnt.clearCnt).toLocaleString()}</FooterStatNum>
                     </FooterItem>
                 </StatFooter>
+                <AboveStatsContainer>
+                    <AboveStatsBlock>
+                        <AboveStatsTitle>확진자:</AboveStatsTitle>
+                        <AboveStatsNum>{(todayCnt.decideCnt).toLocaleString()}</AboveStatsNum>
+                    </AboveStatsBlock>
+                    <AboveStatsBlock>
+                        <AboveStatsTitle>사망자:</AboveStatsTitle>
+                        <AboveStatsNum>{(todayCnt.deathCnt).toLocaleString()}</AboveStatsNum>
+                    </AboveStatsBlock>
+                    <AboveStatsBlock>
+                        <AboveStatsTitle>누적 검사자:</AboveStatsTitle>
+                        <AboveStatsNum>{(todayCnt.accExamCnt).toLocaleString()}</AboveStatsNum>
+                    </AboveStatsBlock>
+                </AboveStatsContainer>
+                {/* {todayStats.map((stat, i)=>
+                    <StatsBlock key={i}>
+                        <AboveStatsName>{statsName[i]}</AboveStatsName>
+                        <StatCnt>{stat.toLocaleString()}</StatCnt>
+                        <CompareStats>({(stat - yesterStats[i]).toLocaleString()})</CompareStats>
+                    </StatsBlock>
+                )} */}
+                
             </StatsContainer>          
     )
 }

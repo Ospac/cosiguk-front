@@ -27,7 +27,9 @@ function Home(){
         const response = await axios.get("/api/data/infectionCity");
         return response.data;
     }
+        //eslint-disable-next-line
     const [infStatState, statRefetch] = UseAsync(getInfectionStatus, []);
+        //eslint-disable-next-line
     const [infCityState, cityRefetch] = UseAsync(getInfectionCity, []);
     const {loading : infStatLoading, data : infStatData, error : infStatError} = infStatState;
     const {loading : infCityLoading, data : infCityData, error : infCityError} = infCityState;

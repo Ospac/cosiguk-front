@@ -10,10 +10,4 @@ a{
   text-decoration: none;
   color: black;
 }
-@font-face {
-  font-family: 'MaruBuri';
-  src: url("./fonts/MaruBuri-Regular.ttf");
-}
-
-
 

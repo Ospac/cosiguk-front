@@ -7,7 +7,15 @@ import styled from 'styled-components';
 const PostViewContainer = styled.div`
         display: flex;
         flex-direction: column;
+        justify-content: center;
     `;
+const BoardHeader = styled.div`
+    height: 80px;
+    text-align: center;
+`;
+const HeaderTitle = styled.h2`
+    margin-top: 26px;
+`;
 const CommentCnt = styled.div`
     font-weight: 500;
     text-align: left;
@@ -19,23 +27,21 @@ const CommentView = styled.div`
     flex-direction: column;
     margin-top: 18px;
 `;
-const CommentWriteContainer = styled.div`
-
-`;
-
-function PostView({boardName}){
+function PostView(){
     const params= useParams();
     const postId = params.id;
 
     const getPostData = async() => {
-        const res = await axios.get(`/api/${boardName}/${postId}`)
+        const res = await axios.get(`/api/board/${postId}`)
         return res;
     }
     const getCommentData = async() => {
         const res = await axios.get(`/api/chat/${postId}/chatList`)
         return res;
     }
+    //eslint-disable-next-line
     const [postState, postRefetch] = UseAsync(getPostData, []);
+    //eslint-disable-next-line
     const [commentState, commentRefetch] = UseAsync(getCommentData, []);
     const {loading : postLoading, data : postData, error : postError} = postState;
     const {loading : commentLoading, data : commentData, error : commentError} = commentState;
@@ -50,13 +56,13 @@ function PostView({boardName}){
 
     return(
         <PostViewContainer>
-            {/* <BoardHeader>
-                <HeaderTitle>{boardName}</HeaderTitle>
-            </BoardHeader> */}
-            <Post postD ata={post} WhatFor="board"></Post>
+            <BoardHeader>
+                <HeaderTitle>Community</HeaderTitle>
+            </BoardHeader>
+            <Post postData={post} WhatFor="board"></Post>
             <CommentCnt>{comments.length} comments</CommentCnt>
             <CommentView>
-                {comments.map((com,i) => <Post id={i} postData={com} WhatFor="chat"></Post>)}
+                {comments.map((com,i) => <Post id={i} postData={com} WhatFor="chat" view="PostView"></Post>)}
                 <CommentWrite postId={postId}></CommentWrite>
             </CommentView>
         </PostViewContainer>

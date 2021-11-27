@@ -23,6 +23,7 @@ async function getNoticeData() {
 }
 
 function Notice(){
+//eslint-disable-next-line
 const [state, refetch] = UseAsync(getNoticeData, []);
 const {loading, data, error} = state;
 if(loading) return <div>Loading</div>;
@@ -40,7 +41,7 @@ return(
         <NoticeBoardBody>
             {noticeBoardData.map((item)=>
             <Link key={item.id} to={`/notice/${item.id}`}>
-                <Post postData={item} WhatFor="board"/>         
+                <Post postData={item} WhatFor="board" view="Notice"/>         
             </Link>
             )}
         </NoticeBoardBody>      

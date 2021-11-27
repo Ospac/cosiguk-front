@@ -48,7 +48,8 @@ async function getBoardData() {
   return response.data;
 }
 
-function BoardView(){
+function Community(){
+  //eslint-disable-next-line
   const [state, refetch] = UseAsync(getBoardData, []);
   const {loading, data, error} = state;
   if(loading) return <h1>Loading</h1>
@@ -66,11 +67,11 @@ function BoardView(){
         <BoardViewBody>
           {boardDataList.map((item)=>
             <Link key={item.id} to={`/board/${item.id}`}>
-              <Post postData={item} WhatFor="board"/>         
+              <Post postData={item} WhatFor="board" view="Community"/>         
             </Link>
           )}
         </BoardViewBody>
       </BoardViewContainer>      
      </>)
 }
-export default BoardView;
+export default Community;
