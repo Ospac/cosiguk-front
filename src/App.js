@@ -21,7 +21,7 @@ const AppContainer = styled.div`
   align-items: flex-start;
   padding-top: 40px;
   padding-bottom: 100px;
-  /* height: 1300px; */
+  color:#363636;
 `;
 const Container = styled.div`
   display: flex;

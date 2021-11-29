@@ -3,37 +3,48 @@ import styled from 'styled-components';
 
 const StatsContainer = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-items: center;
-    width: 460px;
+    width: 420px;
     margin-top:10px;
     flex-wrap: wrap;
-    margin-left: 10px;
 `;
 const AboveStatsContainer = styled.div`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items : center;
     justify-content: center;
     box-shadow: 0 0.1px 2px rgb(32 33 36 / 10%);
     border: 1px solid rgba(70, 77, 82, 0.2);
     border-radius: 7px;
     background: white;
-    width: 420px;
+    width: 400px;
     padding: 15px;
     
 `;
 const AboveStatsBlock = styled.div`
-
+    display: flex;
+    flex-direction: column;
+    align-items : center;
+    justify-content: center;
+    box-shadow: 0 0.1px 2px rgb(32 33 36 / 10%);
+    border: 1px solid rgba(70, 77, 82, 0.2);
+    border-radius: 3px;
+    width: 130px;
+    height: 130px;
+    background-color: #f7f7f7;
 `;
 const AboveStatsTitle = styled.div`
-    font-weight: 300;
-    font-size: 20px;
+    font-size: 14px;
+    border: 0px black;
+    border-radius: 10px;
 `;
 const AboveStatsNum = styled.div`
-    font-size: 25px;
-    font-weight: 400;
+    font-size: 18px;
+    font-weight: 800;
+    color: ${(props)=> props.textColor};
 `;
 
 const AboveStatsName = styled.div`
@@ -47,71 +58,81 @@ const StatFooter = styled.div`
     font-size: 12px;
     box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
     border: 1px solid rgba(70, 77, 82, 0.082);
+    border-radius: 30px;
     margin-left: 8px;
-    width: 440px;
+    width: 380px;
     height: 50px;
     margin-bottom: 10px;
     align-items: center;
     justify-content: center;
-    background-color: rgb(255, 227, 185);
+    background-color: rgb(255 219 175);
 `;
 
 const FooterItem = styled.div`
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding-left: 10px;
     padding-right: 10px;
 `;
-const FooterStatTitle = styled.div``;
-const FooterStatNum = styled.div``;
+const FooterStatTitle = styled.div`
+    font-size: 12px;
+`;
+const FooterStatNum = styled.div`
+    color: ${(props)=> props.textColor};
+    background-color: ${(props)=> props.backgroundColor};
+    border: 0px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight:600;
+    width: 50px;
+
+`;
 
 function InfectionStats ({todayCnt, yesterdayCnt}){
     const todayStats = [
         todayCnt.decideCnt,
+        todayCnt.clearCnt,
         todayCnt.deathCnt,
         todayCnt.accExamCnt,
+        todayCnt.examCnt,
+        todayCnt.resutlNegCnt
     ]
     const yesterStats = [
         yesterdayCnt.decideCnt,
+        yesterdayCnt.clearCnt,
         yesterdayCnt.deathCnt,
         yesterdayCnt.accExamCnt,
+        yesterdayCnt.examCnt,
+        yesterdayCnt.resutlNegCnt
     ]
-    const statsName = ["확진자",  "사망자", "누적 검사자"];
+    const statsName = ["확진자", "격리 해제" ,"사망자", "누적 검사자", "검사 중", "음성 판정"];
     return(
             <StatsContainer>
                 <StatFooter>
                     <FooterItem>
                         <FooterStatTitle>격리 중</FooterStatTitle>
-                        <FooterStatNum>{(todayCnt.decideCnt - todayCnt.clearCnt - todayCnt.deathCnt).toLocaleString()}</FooterStatNum>
+                        <FooterStatNum textColor="black" backgroundColor="#d1d1d1">{(todayCnt.decideCnt - todayCnt.clearCnt - todayCnt.deathCnt).toLocaleString()}</FooterStatNum>
                     </FooterItem>
                     <FooterItem>
                         <FooterStatTitle>오늘 확진자</FooterStatTitle>
-                        <FooterStatNum>{(todayCnt.decideCnt - yesterdayCnt.decideCnt).toLocaleString()}</FooterStatNum>
+                        <FooterStatNum textColor="#e91010" backgroundColor="#ffbbbb">{(todayCnt.decideCnt - yesterdayCnt.decideCnt).toLocaleString()}</FooterStatNum>
                         </FooterItem>
                     <FooterItem>
                         <FooterStatTitle>일일 완치자</FooterStatTitle>
-                        <FooterStatNum>{(todayCnt.clearCnt - yesterdayCnt.clearCnt).toLocaleString()}</FooterStatNum>
+                        <FooterStatNum textColor="#1b4aff" backgroundColor="#c8c8ff">{(todayCnt.clearCnt - yesterdayCnt.clearCnt).toLocaleString()}</FooterStatNum>
                     </FooterItem>
                 </StatFooter>
                 <AboveStatsContainer>
-                    <AboveStatsBlock>
-                        <AboveStatsTitle>확진자:</AboveStatsTitle>
-                        <AboveStatsNum>{(todayCnt.decideCnt).toLocaleString()}</AboveStatsNum>
-                    </AboveStatsBlock>
-                    <AboveStatsBlock>
-                        <AboveStatsTitle>사망자:</AboveStatsTitle>
-                        <AboveStatsNum>{(todayCnt.deathCnt).toLocaleString()}</AboveStatsNum>
-                    </AboveStatsBlock>
-                    <AboveStatsBlock>
-                        <AboveStatsTitle>누적 검사자:</AboveStatsTitle>
-                        <AboveStatsNum>{(todayCnt.accExamCnt).toLocaleString()}</AboveStatsNum>
-                    </AboveStatsBlock>
+                    {todayStats.map((stat, i)=>
+                        <AboveStatsBlock key={i}>
+                            <AboveStatsTitle>{statsName[i]}</AboveStatsTitle>
+                            <AboveStatsNum>{stat.toLocaleString()}</AboveStatsNum>
+                            <AboveStatsName>{(stat - yesterStats[i]).toLocaleString()}</AboveStatsName>
+                        </AboveStatsBlock>
+                    )}
                 </AboveStatsContainer>
-                {/* {todayStats.map((stat, i)=>
-                    <StatsBlock key={i}>
-                        <AboveStatsName>{statsName[i]}</AboveStatsName>
-                        <StatCnt>{stat.toLocaleString()}</StatCnt>
-                        <CompareStats>({(stat - yesterStats[i]).toLocaleString()})</CompareStats>
-                    </StatsBlock>
-                )} */}
                 
             </StatsContainer>          
     )
