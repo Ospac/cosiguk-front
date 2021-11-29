@@ -10,9 +10,20 @@ const HomeContainer = styled.div`
     align-items: center;
 `;
 const HomeHeader = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     height: 80px;
 `;
-const HomeHeaderTitle = styled.h2``;
+const HomeHeaderTitle = styled.div`
+    font-size: 20px;
+    font-weight: bold;
+`;
+const HomeHeaderFooter= styled.div`
+    font-size: 12px;
+`;
 const InfectionStatsContainer  = styled.div`
 `;
 const InfectionByRegionContainer = styled.div`
@@ -43,7 +54,8 @@ function Home(){
     return(
         <HomeContainer>
             <HomeHeader>
-                <HomeHeaderTitle>COVID19</HomeHeaderTitle>
+                <HomeHeaderTitle>코로나19 상황판</HomeHeaderTitle>
+                <HomeHeaderFooter>{(infectionStatusData[0].createDt).slice(0,16)} 기준</HomeHeaderFooter>
             </HomeHeader>
             <InfectionStatsContainer>
                 <InfectionStats 

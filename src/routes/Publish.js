@@ -3,23 +3,71 @@ import styled from 'styled-components';
 import axios from 'axios';
 import {useState} from "react";
 import Box from '@mui/material/Box';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import {TextField, Typography} from '@mui/material';
+import {TextField} from '@mui/material';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
 
 const PostContainer = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `;
 const PostHeader = styled.div`
     width: 750px;
-    height: 80px;
+    height: 90px;
     font-weight: bold;
     font-size: 35px;
+    text-align: center;
+`;
+const PostUserInfo =styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
 `;
 const PostContents = styled.form`
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 750px;
+`;
+const PostTitle = styled.input`
+    width: 500px;
+    height: 5%;    
+    background-color: white;
+    border: 1px solid #e5e8ec;
+    border-radius: 5px;
+    line-height: 1.4375em;
+    padding: 6px 10px;
+    resize: none;
+
+    &:focus {
+    outline-color: #3b7dff;
+    }
+    &::-webkit-input-placeholder {
+
+}
+`;
+const Post = styled.textarea`
+    margin-top: 8px;
+    margin-bottom: 10px;
+    width: 500px;
+    height: 150px;    
+    background-color: white;
+    border: 1px solid #e5e8ec;
+    border-radius: 5px;
+    line-height: 1.4375em;
+    padding: 6px 10px;
+    resize: none;
+    
+    &:focus {
+    outline-color: #3b7dff;
+    }
+    &::-webkit-input-placeholder {
+    }
 `;
 function Publish () {
 
@@ -51,9 +99,7 @@ function Publish () {
                 글쓰기
             </PostHeader>
             <PostContents onSubmit={onPublish}>
-                <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection:'column' }}>
-                    <div>
-                    <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5}} />
+            <PostUserInfo>
                     <TextField
                         required
                         id="outlined-required"
@@ -67,7 +113,7 @@ function Publish () {
                             style: { backgroundColor: "white"},
                             className: styles.postNickname,
                         }}
-                        size=""
+                        size="small"
                         type="text"
                         />
                     <TextField
@@ -81,33 +127,25 @@ function Publish () {
                         type="password"
                         helperText="게시글 삭제와 수정에 이용됩니다."
                         inputProps={{maxLength: 20, style: { backgroundColor: "white"}}}
-                        size=""
+                        size="small"
                         />
-                    </div>
-                     <Typography componet="h2" variant="h5" gutterBottom>
-                    Textarea
-                    </Typography>
-                    <TextField
-                        label="제목"
-                        name="title"
+                        <Button type="submit" variant="contained" endIcon={<SendIcon />} sx={{ml:5, mb:3}}>작성</Button>
+                    </PostUserInfo>
+                    <PostTitle
+                        onChange={handleChange}
                         value={newPost.title || ''}
-                        onChange={handleChange}
-                        variant="filled"
-                        required
-                        inputProps={{style: { width: "700px", backgroundColor: "white"}}}
-                    />
-                    <TextField
-                        label="내용"
-                        name="content"
+                        label="제목" name="title" required placeholder="제목" type="text"
+                        rows="1"
+                    >
+                    </PostTitle>
+                    <Post
+                        onChange={handleChange}  
                         value={newPost.content || ''}
-                        onChange={handleChange}
-                        variant="filled"
-                        multiline
-                        required
-                        rows={10}
-                        inputProps={{style:{width: "700px", backgroundColor: "white"}}}/>
-                    </Box>
-                <button>등록</button>
+                        name="content" label="내용" placeholder="내용" type="text" maxLength="100"
+                        multiline   
+                        >
+                    </Post>
+                    
             </PostContents>
             <div className={styles.postFooter}>
             </div>

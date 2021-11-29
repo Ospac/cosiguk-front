@@ -65,7 +65,7 @@ const StatFooter = styled.div`
     margin-bottom: 10px;
     align-items: center;
     justify-content: center;
-    background-color: rgb(255 219 175);
+    background-color: rgb(68,61, 61);
 `;
 
 const FooterItem = styled.div`
@@ -78,6 +78,9 @@ const FooterItem = styled.div`
 `;
 const FooterStatTitle = styled.div`
     font-size: 12px;
+    margin-bottom: 3px;
+    font-weight: 500;
+    color: white;
 `;
 const FooterStatNum = styled.div`
     color: ${(props)=> props.textColor};
@@ -121,7 +124,7 @@ function InfectionStats ({todayCnt, yesterdayCnt}){
                         </FooterItem>
                     <FooterItem>
                         <FooterStatTitle>일일 완치자</FooterStatTitle>
-                        <FooterStatNum textColor="#1b4aff" backgroundColor="#c8c8ff">{(todayCnt.clearCnt - yesterdayCnt.clearCnt).toLocaleString()}</FooterStatNum>
+                        <FooterStatNum textColor="#002bd1" backgroundColor="#c8c8ff">{(todayCnt.clearCnt - yesterdayCnt.clearCnt).toLocaleString()}</FooterStatNum>
                     </FooterItem>
                 </StatFooter>
                 <AboveStatsContainer>

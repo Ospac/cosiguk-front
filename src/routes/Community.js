@@ -61,7 +61,7 @@ function Community(){
       <> 
       <BoardViewContainer>
         <BoardViewHeader>
-          <BoardViewTitle>Community</BoardViewTitle>
+          <BoardViewTitle>커뮤니티</BoardViewTitle>
           <BoardViewWriteLink to="./post"><EditHeader/></BoardViewWriteLink>
         </BoardViewHeader>
         <BoardViewBody>

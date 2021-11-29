@@ -87,35 +87,35 @@ function CommentWrite({postId}){
         setNewComment(prevObject => ({...prevObject, [e.target.name]: e.target.value}));
     }
     return(
-        <CommentContainer>
-            <CommentForm  onSubmit = {onPublish}>
-                <CommentUser>
-                    <CommentUserInfo>
-                        <CommentUserInput
-                        autocomplete="name"
-                        onChange={handleChange}
-                        value={newComment.nickname || ''}
-                        name="nickname" label="닉네임" placeholder="닉네임" type="text" minLength="3" maxLength="10">
-                        </CommentUserInput>
-                        <CommentUserInput
-                        autocomplete="current-password"
-                        onChange={handleChange}
-                        name="password" label="패스워드" placeholder="비밀번호" type="password" minLength="5" maxLength="20">
-                        </CommentUserInput>
-                    </CommentUserInfo>
-                    <CommentRightSide>
-                        <CommentInput
-                            onChange={handleChange}  
-                            value={newComment.content || ''}
-                            name="content" label="내용" placeholder="내용" type="text" maxLength="100"
-                            multiline
-                            >
-                        </CommentInput>
-                        <Button type="submit" variant="contained" endIcon={<SendIcon />} sx={{mt:1, mr:1.5}}>작성</Button>
-                    </CommentRightSide>
-                </CommentUser>
-            </CommentForm>
-        </CommentContainer>
+            <CommentContainer>
+                <CommentForm  onSubmit = {onPublish}>
+                    <CommentUser>
+                        <CommentUserInfo>
+                            <CommentUserInput
+                            autocomplete="name"
+                            onChange={handleChange}
+                            value={newComment.nickname || ''}
+                            name="nickname" label="닉네임" placeholder="닉네임" type="text" minLength="3" maxLength="10">
+                            </CommentUserInput>
+                            <CommentUserInput
+                            autocomplete="current-password"
+                            onChange={handleChange}
+                            name="password" label="패스워드" placeholder="비밀번호" type="password" minLength="5" maxLength="20">
+                            </CommentUserInput>
+                        </CommentUserInfo>
+                        <CommentRightSide>
+                            <CommentInput
+                                onChange={handleChange}  
+                                value={newComment.content || ''}
+                                name="content" label="내용" placeholder="내용" type="text" maxLength="100"
+                                multiline
+                                >
+                            </CommentInput>
+                            <Button type="submit" variant="contained" endIcon={<SendIcon />} sx={{mt:1, mr:1.5}}>작성</Button>
+                        </CommentRightSide>
+                    </CommentUser>
+                </CommentForm>
+            </CommentContainer>
     )
     
 }

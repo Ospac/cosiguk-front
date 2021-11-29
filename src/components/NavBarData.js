@@ -1,31 +1,24 @@
-import {MdOutlineCoronavirus} from "react-icons/md";
-import {RiSyringeLine} from 'react-icons/ri'
-import {BsClipboardPlus} from 'react-icons/bs'
-import {GoKeyboard} from 'react-icons/go'
+import CoronavirusIcon from '@mui/icons-material/Coronavirus';
+import ArticleIcon from '@mui/icons-material/Article';
+import AssignmentLateIcon from '@mui/icons-material/AssignmentLate';
 
 export const NavBarData = [
     {
         title: "확진 현황",
-        path: "",
-        icon: <MdOutlineCoronavirus/>,
-        
-    },
-    {
-        title: "백신 정보",
-        path: "",
-        icon: <RiSyringeLine/>,
+        path: "/",
+        icon: <CoronavirusIcon style={{ fill: 'rgba(0,0,0,0.45)', fontSize:"20px"}}/>,
         
     },
     {
         title: "게시판",
         path: "/board",
-        icon: <GoKeyboard/>,
+        icon: <ArticleIcon style={{ fill: 'rgba(0,0,0,0.45)', fontSize:"20px"}}/>,
         
     },
     {
         title: "공지사항",
         path: "/notice",
-        icon: <BsClipboardPlus/>,
+        icon: <AssignmentLateIcon style={{ fill: 'rgba(0,0,0,0.45)', fontSize:"20px"}}/>,
         
     }
 ];

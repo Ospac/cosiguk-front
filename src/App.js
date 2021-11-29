@@ -13,6 +13,7 @@ import NoticePostView from './routes/NoticePostView.js'
 import Notice from "./routes/Notice.js"
 import NavBar from "./components/NavBar.js"
 import SubNavBar from './components/SubNavBar';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const AppContainer = styled.div`
   display: flex;

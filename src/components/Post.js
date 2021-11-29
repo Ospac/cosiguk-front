@@ -17,6 +17,9 @@ const PostContainer = styled.div`
         border-radius: 7px;
         width: 750px;
         margin-top: 12px;
+        @media screen and (max-width: 650px) {
+        width: 100%;
+    }
     `;
 const PostHeader = styled.div`
     display:flex;

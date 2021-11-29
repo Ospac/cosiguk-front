@@ -36,7 +36,7 @@ return(
     <>
     <NoticeBoardContainer>
         <NoticeBoardHeader>
-            <NoticeHeaderTitle>Notice</NoticeHeaderTitle>
+            <NoticeHeaderTitle>공지사항</NoticeHeaderTitle>
         </NoticeBoardHeader>
         <NoticeBoardBody>
             {noticeBoardData.map((item)=>

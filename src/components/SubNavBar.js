@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import EmailIcon from '@mui/icons-material/Email';
-import InstagramIcon from '@mui/icons-material/Instagram';
 const NavContainer = styled.nav`
     display: flex;
     background-color: white;
@@ -15,6 +14,9 @@ const NavContainer = styled.nav`
     height: 80px;
     position: sticky;
     top: 17%;
+    @media screen and (max-width: 650px) {
+        display: none;
+    }
 `;
 const NavText = styled.div`
     font-size: 10px;
@@ -36,7 +38,6 @@ function SubNavBar(){
                 <NavText><h2>Contact</h2></NavText>
                 <ContactIcons>
                     <EmailIcon style={{ fill: 'rgba(0,0,0,0.7)' }} fontSize="small"/>
-                    <InstagramIcon style={{ fill: 'rgba(0,0,0,0.7)'}} fontSize="small"/>
                 </ContactIcons>
             </NavContainer>
         </>
