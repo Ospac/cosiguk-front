@@ -6,11 +6,10 @@ function EditHeader(){
     return(
         <div>
             <Tooltip title="글쓰기" arrow>
-                <Fab color="secondary" 
+                <Fab color="white" 
                     aria-label="write" 
-                    size="small"
-                >
-                    <EditIcon />
+                    size="small">
+                <EditIcon />
                 </Fab>
             </Tooltip>            
         </div>
